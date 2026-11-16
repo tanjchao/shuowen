@@ -1,0 +1,546 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>說文解圖｜陋室銘</title><style>
+:root{--ink:#302c2a;--muted:#736a61;--paper:#fffdf8;--bg:#f3eee6;--brown:#8b5940;--line:#d8c8b6;--green:#397450}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #3874b4;outline-offset:3px}.app{max-width:900px;margin:auto;padding:14px 14px 40px}header{text-align:center;padding:8px 0 12px}.eyebrow{font-size:13px;color:var(--brown);letter-spacing:2px;font-weight:700}h1{font-size:clamp(22px,4vw,30px);margin:5px 0}header p{margin:4px;color:var(--muted);font-size:13px}.topline{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:700;margin:8px 0}.progress{height:8px;border-radius:12px;background:#dfd3c6;overflow:hidden}.progress>div{height:100%;background:#709c7c;transition:width .3s}.card,.library,.review{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 3px 14px #4e33200b}.card{margin-top:12px}.tag{font-size:13px;color:var(--brown);font-weight:800}.sentence{font-size:22px;line-height:1.7;letter-spacing:.025em;margin:9px 0 14px;font-weight:650}.target{height:148px;border:2px dashed #b88768;background:#f9f1e7;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:#92725e}.target .plus{font-size:36px;line-height:1}.target.filled{border-style:solid;background:#fff}.target.filled img{height:100%;max-width:100%;object-fit:contain;border-radius:8px}.library{margin-top:12px}.library-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.library h2,.review h2{font-size:18px;margin:0}.sub{font-size:12px;color:var(--muted);margin:5px 0 12px}.choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.choice{padding:3px;background:white;border:2px solid #e0d4c7;border-radius:9px;aspect-ratio:1;overflow:hidden;min-width:0}.choice img{width:100%;height:100%;object-fit:cover;display:block;border-radius:5px}.choice:active{transform:scale(.96)}.feedback{font-size:14px;font-weight:700;min-height:22px;margin:12px 0 0}.feedback.good{color:var(--green)}.feedback.bad{color:#b44937}.controls{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}.controls button,.modal-actions button,.next{border:0;border-radius:10px;padding:11px 14px;font-weight:750}.controls button{background:#e8ddd0;color:#4a3a30;font-size:14px}.overlay{position:fixed;inset:0;background:#1d1919b9;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.overlay.show{display:flex}.modal{width:min(100%,440px);background:#fffdf8;border-radius:18px;padding:16px;box-shadow:0 12px 55px #0004}.modal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.modal-top strong{font-size:18px}.close{border:0;background:#eee6dc;border-radius:50%;width:34px;height:34px;font-size:23px}.preview{display:block;width:min(100%,min(56vh,370px));aspect-ratio:1;object-fit:contain;margin:auto;border-radius:10px;background:#f2e9de}.modal-actions{display:flex;gap:9px;margin-top:14px}.modal-actions button{flex:1}.cancel{background:#eee6dc;color:#51443a}.confirm,.next{background:#8b5940;color:#fff}.review{margin-top:14px;display:none}.review.show{display:block}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.review-item{border:1px solid var(--line);border-radius:12px;padding:9px;background:white}.review-item img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:7px}.review-item p{font-size:16px;line-height:1.65;margin:8px 0 0}.review-item small{color:var(--brown)}.next{width:100%;margin-top:5px}.note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}@media(min-width:680px){.app{padding:22px}.play-area{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:start}.card,.library{margin-top:16px}.choices{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.target{height:230px}.review-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(min-width:1000px){.app{max-width:1120px}.choices{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:360px){.app{padding:10px}.card,.library{padding:11px}.choices{gap:5px}.sentence{font-size:21px}}
+
+/* V2.7：保留既有功能，新增速度獎勵與 Combo */
+@media (max-width:679px){
+  .app{padding:10px 12px 28px}
+  header{padding:3px 0 8px}
+  .card,.library{padding:12px;margin-top:10px}
+  .sentence{font-size:22px;line-height:1.65;margin:10px 0 12px}
+  .target{height:auto;min-height:48px;padding:9px 12px;flex-direction:row;gap:8px;font-size:15px}
+  .target .plus{font-size:22px;line-height:1}
+  .target.filled{height:auto;min-height:48px;max-height:220px;padding:8px}
+  .target.filled img{max-height:200px;width:auto;max-width:100%;object-fit:contain}
+  .feedback{min-height:0;margin:7px 0 0}
+  .feedback:empty{display:none}
+  .choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .choice{padding:4px;border-radius:12px}
+  .choice img{border-radius:8px}
+  .sub{margin:4px 0 10px}
+  .controls{margin-top:12px}
+  .note{margin-top:10px}
+}
+@media (min-width:680px){
+  .target{height:auto;min-height:62px;padding:10px;flex-direction:row;font-size:16px}
+  .target .plus{font-size:24px}
+  .target.filled{height:220px}
+  .choices{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (min-width:1000px){.choices{grid-template-columns:repeat(6,minmax(0,1fr))}}
+
+.choices{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media(max-width:679px){.app{padding-bottom:32px}.choice{touch-action:manipulation}.review-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#complete .review-grid{grid-template-columns:repeat(2,minmax(0,1fr))}@media(min-width:680px){#complete .review-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media print{#complete .review-grid{grid-template-columns:repeat(4,1fr)}button{display:none!important}}
+
+/* V2.9：手動確認得分框、放大總分、5秒 Combo 倒數 */
+#score{font-size:clamp(22px,4vw,30px);line-height:1.15;font-weight:950;white-space:nowrap}
+.score-burst{pointer-events:auto;min-width:min(88vw,360px);max-width:92vw;padding:20px 22px 18px;transform:translate(-50%,-50%) scale(.92);opacity:0;display:none}
+.score-burst.show{display:block;opacity:1;animation:scoreModalIn .24s cubic-bezier(.2,.9,.25,1) both}
+@keyframes scoreModalIn{0%{opacity:0;transform:translate(-50%,-46%) scale(.82)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.score-burst .score-main{font-size:clamp(22px,6vw,34px);line-height:1.3;white-space:normal;text-shadow:none}
+.score-lines{display:grid;gap:10px;text-align:left;margin:2px 0 16px;font-size:clamp(20px,5.3vw,30px);line-height:1.25;font-weight:950}
+.score-line{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.score-line .label{white-space:nowrap}.score-line .value{white-space:nowrap}
+.score-confirm{display:block;margin:4px auto 0;border:0;border-radius:999px;padding:10px 30px;min-width:118px;background:#fff;color:#77442f;font-weight:950;font-size:18px;box-shadow:0 3px 10px #0002}
+.score-burst.negative .score-confirm{color:#9a2629}.score-burst.neutral .score-confirm{color:#6f523a}
+.score-burst .score-sub{display:none}
+.combo-badge{transition:opacity .08s linear,transform .2s ease}
+.combo-badge.combo-hidden{opacity:0;visibility:hidden}
+
+/* v3.1：排行榜榮譽化＋我的名次 */
+.lb-me-card{margin:14px 0 16px;padding:15px 16px;border:2px solid #6e9a78;border-radius:18px;background:#f1f8f1;display:none}
+.lb-me-card.show{display:block}.lb-me-title{font-size:14px;font-weight:800;color:#5c765f;margin-bottom:6px}.lb-me-rank{font-size:clamp(24px,5vw,34px);font-weight:950;color:#2f6845;line-height:1.15}.lb-me-score{font-size:18px;font-weight:900;margin-top:5px}.lb-me-goal{margin-top:7px;color:#7b5a45;font-weight:750;line-height:1.55}
+.lb-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0 16px;align-items:end}.podium-card{border-radius:18px;padding:13px 8px;text-align:center;border:2px solid #d8c8b6;background:#fffdf8;min-width:0;box-shadow:0 6px 16px rgba(70,50,30,.08)}.podium-card.first{padding-top:20px;padding-bottom:20px;border-color:#d6aa35;background:linear-gradient(180deg,#fff9d9,#fffdf8);order:2}.podium-card.second{border-color:#aeb4bb;background:linear-gradient(180deg,#f3f5f7,#fffdf8);order:1}.podium-card.third{border-color:#b77b50;background:linear-gradient(180deg,#f8e7db,#fffdf8);order:3}.podium-card.me{box-shadow:0 0 0 4px rgba(76,137,91,.22),0 6px 16px rgba(70,50,30,.1)}.podium-medal{font-size:32px;line-height:1}.podium-title{font-size:12px;font-weight:900;color:#8b5940;margin:5px 0}.podium-name{font-size:17px;font-weight:950;overflow-wrap:anywhere}.podium-score{font-size:18px;font-weight:950;color:#397450;margin-top:5px}.podium-crown{font-size:22px;margin-bottom:2px}
+.lb-section-title{font-size:14px;font-weight:900;color:#8b5940;margin:10px 0 6px}.lb-row.toplist{grid-template-columns:54px 1fr auto}.lb-row.toplist .lb-rank{font-size:16px}
+@media(max-width:520px){.lb-podium{gap:6px}.podium-card{padding:11px 5px}.podium-card.first{padding-top:17px;padding-bottom:17px}.podium-name{font-size:14px}.podium-score{font-size:15px}.podium-medal{font-size:27px}}
+
+/* v3.2：排行榜隨時可看＋我的排名固定最上方 */
+.lb-me-card{margin:8px 0 12px!important;padding:18px 18px!important;border:3px solid #5f8f69!important;background:linear-gradient(180deg,#eef8ef,#fffdf8)!important;box-shadow:0 8px 22px rgba(61,111,73,.16)}
+.lb-me-title{font-size:15px!important;letter-spacing:.04em}.lb-me-rank{font-size:clamp(28px,6vw,40px)!important}.lb-me-score{font-size:20px!important}.lb-me-empty{font-size:16px;font-weight:800;color:#6f655d;line-height:1.65}.lb-current-player{font-size:13px;color:#5c765f;font-weight:800;margin-top:4px}
+.start-leaderboard{margin-top:10px!important;background:#6f8150!important;width:100%}
+.sort-leaderboard{display:block;width:100%;margin:10px 0 4px!important;background:#6f8150!important}
+.academy-finish{margin:18px 0;padding:18px;border:2px solid #cfb37a;border-radius:16px;background:linear-gradient(120deg,#fff8e7,#f8e7c6);color:#624826;box-shadow:0 5px 14px #99723d22}.academy-finish strong{font-size:21px;display:block;margin:0 0 6px}.academy-finish .academy-line{font-size:15px;line-height:1.7;margin:5px 0}.academy-finish .academy-new{font-size:15px;font-weight:850;color:#79502b;margin-top:9px}</style><style>
+.translate-btn{display:block;margin:-3px 0 10px;padding:9px 12px;border:1px solid #cbb49e;background:#f6eee3;border-radius:9px;color:#755038;font-weight:700}
+.translation{background:#f6eee3;border-left:4px solid #ad8465;padding:12px;margin-bottom:12px;border-radius:6px;line-height:1.75;font-size:16px}.translation[hidden]{display:none}
+.sort-subtitle{font-size:16px;margin:17px 0 9px}.sort-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sort-pool{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sort-slot{border:2px dashed #cbb7a2;border-radius:10px;padding:4px 6px;min-height:0;background:#fffaf3}.sort-slot.locked{border:2px solid #5b9970;background:#f0f8f0}.sort-position{font-size:13px;color:#7c5a40;font-weight:800;margin:3px 0 6px}.sort-empty{height:12px;display:grid;place-items:center;color:#9a8575;font-size:11px}.sort-slot:has(.sort-empty){padding:2px 5px}.sort-slot:has(.sort-empty) .sort-position{margin:0;line-height:20px}.sort-slot:has(.sort-empty) .sort-empty{display:none}.sort-slot:has(.sort-card){padding:6px}.sort-slot:has(.sort-card) .sort-card img{aspect-ratio:1}.sort-card{display:block;width:100%;background:#fff;border:1px solid #dacbbc;border-radius:10px;padding:6px;text-align:left;color:var(--ink)}.sort-card img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:7px}.sort-card span{display:block;font-size:14px;line-height:1.55;padding:7px 2px 3px;overflow-wrap:anywhere}.sort-card:disabled{opacity:1;cursor:default}.sort-slot.locked .sort-card{background:#f1f8f1}.review-translation{font-size:13px!important;color:#80624d;line-height:1.65!important;margin-top:6px!important;border-top:1px dashed #ddcbbb;padding-top:7px}.next:disabled{opacity:.4;cursor:not-allowed}.sort-assists{display:grid;grid-template-columns:1fr;gap:9px;margin:10px 0 4px}.sort-assists:not(:has(button:not([hidden]))){display:none}.sort-assists .next{margin-top:0}.sort-assists #sortHint{background:#6f8150}.sort-assists #sortRescue{background:#70665f}
+@media(min-width:680px){.sort-slots{grid-template-columns:repeat(4,minmax(0,1fr))}.sort-pool{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* 音樂控制列固定三欄：音樂按鈕從載入開始就固定在右側 */
+.controls{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:stretch}
+.controls button{min-width:0;white-space:nowrap}
+#music{width:100%}
+@media(max-width:679px){.controls{gap:6px}.controls button{font-size:12px;padding:9px 7px}}
+
+/* V2.5：中央加扣分回饋 */
+.score-burst{position:fixed;left:50%;top:48%;transform:translate(-50%,-50%) scale(.65);z-index:60;pointer-events:none;opacity:0;min-width:180px;text-align:center;padding:18px 26px;border-radius:24px;font-weight:900;letter-spacing:.04em;filter:drop-shadow(0 8px 18px #0003)}
+.score-burst.show{animation:scorePop .95s cubic-bezier(.2,.9,.25,1) both}
+.score-burst.positive{color:#fff;background:linear-gradient(145deg,#43a65f,#287846);border:4px solid #dff5c8;box-shadow:0 0 0 7px #ffffffcc,0 12px 32px #1f6c3c55}
+.score-burst.negative{color:#fff;background:linear-gradient(145deg,#dc4d43,#a82326);border:4px solid #ffd1c9;box-shadow:0 0 0 7px #ffffffcc,0 12px 32px #8b191955}
+.score-burst.neutral{color:#4d4037;background:#fff8e8;border:4px solid #dfc08c;box-shadow:0 0 0 7px #ffffffcc,0 12px 32px #6c513e33}
+.score-burst .score-main{font-size:clamp(42px,11vw,72px);line-height:1;white-space:nowrap;text-shadow:0 3px 0 #0002}
+.score-burst .score-sub{font-size:clamp(14px,3.5vw,20px);margin-top:9px;letter-spacing:.02em}
+#score.score-pulse{animation:scorePulse .55s ease}
+@keyframes scorePop{0%{opacity:0;transform:translate(-50%,-44%) scale(.55) rotate(-4deg)}18%{opacity:1;transform:translate(-50%,-52%) scale(1.12) rotate(2deg)}34%{transform:translate(-50%,-50%) scale(.98) rotate(0)}72%{opacity:1;transform:translate(-50%,-52%) scale(1)}100%{opacity:0;transform:translate(-50%,-62%) scale(1.08)}}
+@keyframes scorePulse{0%,100%{transform:scale(1)}45%{transform:scale(1.28)}}
+@media(prefers-reduced-motion:reduce){.score-burst.show,#score.score-pulse{animation-duration:.12s}}
+
+/* V2.6：玩家姓名、結算大分數、本機排行榜 */
+.start-overlay{position:fixed;inset:0;z-index:90;background:rgba(243,238,230,.97);display:flex;align-items:center;justify-content:center;padding:20px}
+.start-panel{width:min(92vw,430px);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 18px 60px #4e33202b;text-align:center}
+.start-panel h2{font-size:26px;margin:0 0 8px}.start-panel p{color:var(--muted);line-height:1.6;margin:0 0 16px}
+.start-panel input{width:100%;border:2px solid #cdb9a5;border-radius:12px;padding:13px 14px;font:inherit;font-size:18px;background:#fff;margin-bottom:10px}
+.start-panel .next{margin-top:0}.start-error{min-height:22px;color:#b44937;font-weight:700;font-size:14px;margin-top:8px}
+.complete-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:6px}
+.complete-head h2{flex:1;line-height:1.35}
+.final-score{flex:0 0 auto;text-align:center;font-weight:950;color:#8b3f2c;background:#fff4e8;border:3px solid #d5a676;border-radius:16px;padding:10px 15px;box-shadow:0 5px 16px #8b59401c;line-height:1}
+.final-score .big{display:block;font-size:clamp(30px,7vw,52px);white-space:nowrap;letter-spacing:-.03em}
+.final-score .label{display:block;font-size:12px;color:#8b5940;margin-bottom:5px;letter-spacing:.08em}
+.complete-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0 2px}.complete-actions .next{margin-top:0}
+#showLeaderboard{background:#6f8150}
+.lb-overlay{position:fixed;inset:0;z-index:95;background:#1d1919b9;display:none;align-items:center;justify-content:center;padding:18px}.lb-overlay.show{display:flex}
+.lb-panel{width:min(94vw,520px);max-height:82vh;overflow:auto;background:var(--paper);border-radius:20px;padding:18px;box-shadow:0 16px 60px #0005}
+.lb-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}.lb-head h2{margin:0;font-size:23px}
+.lb-list{display:grid;gap:8px;margin-top:12px}.lb-row{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:9px;background:#f7f0e7;border:1px solid #dfd0bf;border-radius:12px;padding:10px 12px}.lb-row.me{border:3px solid #6e9a78;background:#eff8ef}.lb-rank{font-size:20px;font-weight:900;color:#8b5940}.lb-name{font-weight:800;overflow-wrap:anywhere}.lb-score{font-size:18px;font-weight:950;color:#397450;white-space:nowrap}.lb-empty{text-align:center;color:var(--muted);padding:22px 8px}
+@media(max-width:520px){.complete-head{align-items:stretch;flex-direction:column}.final-score{width:100%;padding:12px}.final-score .big{font-size:42px}.complete-actions{grid-template-columns:1fr}.lb-row{grid-template-columns:38px 1fr auto;padding:9px}}
+
+/* V2.7：速度獎勵、Combo 與最終分數拆解 */
+.score-burst.combo-burst{min-width:min(88vw,430px);padding:18px 20px}
+.score-burst.combo-burst .score-main{font-size:clamp(25px,7vw,42px);line-height:1.22;white-space:normal}
+.score-burst.combo-burst .score-sub{font-size:clamp(15px,4vw,20px);line-height:1.55;font-weight:850}
+.final-score{min-width:min(100%,360px);padding:14px 18px;line-height:1.3}
+.final-score .breakdown{display:grid;gap:7px;text-align:left;font-size:clamp(15px,3.6vw,18px)}
+.final-score .breakdown-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+.final-score .breakdown-row strong{font-size:1.08em}
+.final-score .breakdown-total{border-top:2px solid #d8b28d;margin-top:4px;padding-top:9px;color:#8b3f2c;font-size:clamp(21px,5vw,28px);font-weight:950}
+.final-score .score-plus{font-weight:900;color:#397450;white-space:nowrap}
+@media(max-width:520px){.final-score{padding:15px 16px}.final-score .breakdown{font-size:17px}}
+
+/* V2.8：延長得分回饋，題目卡固定顯示目前 Combo */
+.question-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:-3px 0 10px}
+.question-tools .translate-btn{margin:0;flex:0 1 auto}
+.combo-badge{margin-left:auto;min-width:132px;padding:9px 12px;border:2px solid #e1b164;background:linear-gradient(145deg,#fff8df,#f8e7b8);border-radius:12px;text-align:center;font-weight:950;color:#a65325;white-space:nowrap;box-shadow:0 3px 10px #9c6a2920}
+.combo-badge .combo-number{font-size:1.18em;color:#c6442e}
+.combo-badge.combo-live{animation:comboPulse .48s ease}
+@keyframes comboPulse{0%,100%{transform:scale(1)}45%{transform:scale(1.13)}}
+@media(max-width:420px){.question-tools{gap:7px}.combo-badge{min-width:116px;padding:9px 8px;font-size:13px}.question-tools .translate-btn{padding:9px 9px;font-size:13px}}
+/* 分數資訊較多，維持約 1.3 秒後再淡出 */
+.score-burst.show{animation-duration:1.3s}
+@keyframes scorePop{0%{opacity:0;transform:translate(-50%,-44%) scale(.55) rotate(-4deg)}12%{opacity:1;transform:translate(-50%,-52%) scale(1.12) rotate(2deg)}24%{opacity:1;transform:translate(-50%,-50%) scale(.98) rotate(0)}82%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}100%{opacity:0;transform:translate(-50%,-58%) scale(1.04)}}
+
+/* v2.9.1: score dialog must remain visible until player confirms */
+.score-burst{pointer-events:auto!important;display:none!important;opacity:0!important;animation:none!important;}
+.score-burst.show{display:block!important;opacity:1!important;animation:scoreModalIn .24s cubic-bezier(.2,.9,.25,1) both!important;}
+.score-burst .score-confirm{pointer-events:auto!important;}
+.portal-return{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#755b89!important;color:#fff!important;border-radius:12px;padding:12px 16px;font-weight:850;min-height:44px}.portal-return:focus-visible{outline:3px solid #e4ba70;outline-offset:3px}.test-notice{background:#fff3d6;border:1px solid #dbbb7c;color:#65451f;padding:12px 16px;border-radius:12px;margin:12px 0 20px;font-size:13px;font-weight:700;line-height:1.65}</style></head><body><main class="app"><header><div class="eyebrow">說文解圖 · 2026 臺灣閱讀節 · 兩章十句</div><h1>《陋室銘》</h1><p>古文原句 × 陋室清趣｜閱讀原文，破解經典插畫</p><p style="font-size:12px;opacity:.8;margin-top:6px">走進劉禹錫的陋室，透過插畫理解古文意境與文人風骨。</p></header><div id="game"><div class="topline"><span id="progressLabel">第 1 / 10 句</span><span id="score">得分 0</span></div><div class="progress"><div id="progressFill"></div></div><div class="play-area"><section class="card"><div class="tag" id="chapterLabel">第一章・情節配對</div><p class="sentence" id="sentence"></p><div class="question-tools"><button class="translate-btn" id="translateToggle" type="button">📖 查看白話翻譯</button><div class="combo-badge" id="comboBadge" aria-live="polite">🔥 COMBO <span class="combo-number" id="comboNumber">0</span></div></div><div class="translation" id="translation" hidden></div><div class="target" id="target"><span class="plus">＋</span><span>選擇下方插畫填入</span></div><div id="feedback" class="feedback" aria-live="polite"></div></section><section class="library"><div class="library-head"><h2>候選插畫</h2><span id="remaining" class="tag"></span></div><p class="sub">點選縮圖 → 放大觀看 → 確認作答（每題固定4張）</p><div class="choices" id="choices"></div><div class="controls"><button id="reset">重新開始</button><button id="sound">音效：開</button><button id="music">♫ 背景音樂：準備中</button></div></section></div></div><section id="sorting" class="review"><h2 id="sortTitle">五句情節排序挑戰</h2><p class="sub">依故事順序點選下方「圖片＋原文」，放入上方五個位置。點擊已放入的圖片可以卸下。</p><div id="sortStats" class="tag"></div><button class="next sort-leaderboard" id="sortLeaderboard" type="button">🏆 查看排行榜</button><div class="sort-assists"><button class="next" id="sortHint" type="button" hidden>💡 幫我排一張</button><button class="next" id="sortRescue" type="button" hidden>🆘 幫我完成剩下排序</button></div><h3 class="sort-subtitle">故事順序（空格為窄條，放入後展開；點擊可卸下）</h3><div id="sortSlots" class="sort-slots"></div><h3 class="sort-subtitle">待排序漫畫</h3><div id="sortPool" class="sort-pool"></div><p id="sortFeedback" class="feedback" aria-live="polite"></p><button class="next" id="checkSort" disabled>確認排序</button></section><section id="review" class="review"><h2>🎉 章節完成！五句漫畫回顧</h2><p class="sub">依照故事順序回顧本章五幅插畫與古文。</p><div class="review-grid" id="reviewGrid"></div><button class="next" id="again">進入第二章</button></section><section id="complete" class="review"><div class="complete-head"><h2>🎉 陋室銘挑戰完成！10句完整連環漫畫</h2><div class="final-score" id="finalScore"><div class="breakdown"><div class="breakdown-row"><span>基本得分</span><strong id="finalBase">0</strong></div><div class="breakdown-row"><span>⚡速度獎勵</span><span class="score-plus" id="finalSpeed">+0</span></div><div class="breakdown-row"><span>🔥 Combo獎勵</span><span class="score-plus" id="finalCombo">+0</span></div><div class="breakdown-row breakdown-total"><span>最終得分</span><strong id="finalTotal">0</strong></div></div></div></div><p class="sub">兩章陋室故事依序呈現。可向下捲動欣賞全部10幅畫與原文。</p><div class="academy-finish" id="academyFinish" aria-live="polite" hidden></div><div class="complete-actions"><button class="next" id="showLeaderboard">🏆 查看排行榜</button><a class="next portal-return" id="portalReturn" href="../index.html">🏮 返回閱讀節入口</a><button class="next" id="restartAll">重新挑戰10句</button></div><div class="review-grid" id="completeGrid"></div></section><p class="note">選圖答對100分，答錯前兩次各扣50分｜⚡ 0～5秒 +50、6～10秒 +10｜🔥 5秒內首次答對連擊：2 Combo +10、3 Combo +20、4 Combo +30、5 Combo以上 +50｜排序首輪每格50分、第二輪25分、第三輪起自行答對10分；系統提示0分</p></main><div id="playerStart" class="start-overlay"><div class="start-panel"><h2>《陋室銘》挑戰</h2><p>請先輸入玩家姓名。完成挑戰後，成績會登上排行榜。</p><input id="playerNameInput" type="text" maxlength="12" autocomplete="off" placeholder="輸入姓名（最多12字）" aria-label="玩家姓名"><button class="next" id="startGameBtn" type="button">開始挑戰</button><button class="next start-leaderboard" id="startLeaderboard" type="button">🏆 查看排行榜</button><p style="margin:10px 0"><a href="../index.html">← 返回閱讀節雙篇入口</a></p><div id="startError" class="start-error" aria-live="polite"></div></div></div><div id="leaderboardOverlay" class="lb-overlay" role="dialog" aria-modal="true" aria-label="排行榜"><div class="lb-panel"><div class="lb-head"><h2>🏆 2026 閱讀節共用排行榜</h2><button class="close" id="closeLeaderboard" aria-label="關閉排行榜">×</button></div><div id="myRankCard" class="lb-me-card"></div><p class="sub" id="leaderboardNote">☁️ 閱讀節共用排行榜｜兩篇共用排行，同一姓名只保留最高分。</p><div id="leaderboardPodium" class="lb-podium"></div><div class="lb-section-title" id="leaderboardListTitle">第 4～20 名</div><div id="leaderboardList" class="lb-list"></div></div></div><div id="scoreBurst" class="score-burst" role="dialog" aria-modal="true" aria-live="assertive" aria-atomic="true"><div class="score-main"></div><div class="score-lines"></div><div class="score-sub"></div><button class="score-confirm" id="scoreConfirm" type="button">確認</button></div><audio id="bgm" preload="none" loop autoplay playsinline></audio><div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="放大預覽候選圖片"><div class="modal"><div class="modal-top"><strong>仔細觀察這張插畫</strong><button class="close" id="close" aria-label="關閉預覽">×</button></div><img id="preview" class="preview" alt="候選插畫放大預覽"><div class="modal-actions"><button class="cancel" id="cancel">再看看其他圖</button><button class="confirm" id="confirm">確認選這張</button></div></div></div><script>
+/* 2026 閱讀節獨立版：不載入正式版書院學籍、文采值或徽章資料。 */
+const CHAPTER_SIZE=5;
+const CHAPTER_NAMES=['第一章','第二章'];
+const scenes=[{"id":1,"text":"山不在高，有仙則名。","src":"image/room_01.webp"},{"id":2,"text":"水不在深，有龍則靈。","src":"image/room_02.webp"},{"id":3,"text":"斯是陋室，惟吾德馨。","src":"image/room_03.webp"},{"id":4,"text":"苔痕上階綠，草色入簾青。","src":"image/room_04.webp"},{"id":5,"text":"談笑有鴻儒，往來無白丁。","src":"image/room_05.webp"},{"id":6,"text":"可以調素琴，閱金經。","src":"image/room_06.webp"},{"id":7,"text":"無絲竹之亂耳。","src":"image/room_07.webp"},{"id":8,"text":"無案牘之勞形。","src":"image/room_08.webp"},{"id":9,"text":"南陽諸葛廬，西蜀子雲亭。","src":"image/room_09.webp"},{"id":10,"text":"孔子云：何陋之有？","src":"image/room_10.webp"}];
+const translations=["山不一定要高，有仙人居住就會出名。","水不一定要深，有龍存在就顯得靈異。","這雖是一間簡陋的屋子，但因居住者品德高尚而顯得美好。","青苔沿著臺階生長，滿階碧綠；草木的青翠映入竹簾。","在這裡談笑往來的都是學識淵博的人，沒有不學無術之輩。","可以彈奏不加裝飾的古琴，閱讀佛經。","沒有嘈雜的管弦音樂擾亂耳朵。","沒有繁忙的官府公文使身體勞累。","就像南陽諸葛亮的草廬、西蜀揚雄的亭子，都因主人而著名。","孔子說：這有什麼簡陋的呢？"];
+const $=s=>document.querySelector(s);let index=0,score=0,baseScore=0,speedBonusTotal=0,comboBonusTotal=0,comboCount=0,comboDeadline=null,comboFadeRaf=null,questionStartTime=null,questionRenderToken=0,wrongCount=0,soundOn=true,order=[],picked=null,busy=false,audioCtx=null,reviewChapter=0,playerName="",scoreSaved=false;function shuffle(items){let a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}// 答對／答錯提示音使用 Web Audio；背景音樂讀取 GitHub 上的 MP3。
+const bgm=$('#bgm');bgm.volume=.32;
+const bgmUrl='music/background.mp3';
+let musicWanted=true,musicPlaying=false,musicReady=false,bgmLoadStarted=false,remainingPreloadStarted=false,autoplayBlocked=false;
+function updateMusicButton(){
+ const b=$('#music');
+ if(!musicWanted){b.textContent='♫ 播放背景音樂';return}
+ if(!musicReady){b.textContent=bgmLoadStarted?'♫ 背景音樂：載入中':'♫ 背景音樂：準備中';return}
+ b.textContent=musicPlaying?'♫ 暫停背景音樂':(autoplayBlocked?'♫ 背景音樂：點圖片後播放':'♫ 背景音樂：待播放');
+}
+function ctxAudio(){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;const c=audioCtx||(audioCtx=new C());if(c.state==='suspended')c.resume();return c}
+function tone(freq,start,duration,volume,type='sine'){
+ const c=ctxAudio();if(!c)return;
+ const osc=c.createOscillator(),gain=c.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,start);
+ gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(Math.max(.001,volume),start+.015);gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+ osc.connect(gain).connect(c.destination);osc.start(start);osc.stop(start+duration+.02);
+}
+function play(){if(!soundOn)return;try{const c=ctxAudio();if(!c)return;[523,659,784,1047].forEach((f,i)=>tone(f,c.currentTime+i*.105,.29,.28,'triangle'))}catch(e){}}
+function wrong(){if(!soundOn)return;try{const c=ctxAudio();if(!c)return;tone(392,c.currentTime,.14,.19,'triangle');tone(294,c.currentTime+.13,.16,.20,'triangle');tone(220,c.currentTime+.27,.30,.22,'triangle')}catch(e){}}
+let scoreBurstTimer=null,scoreBurstConfirmAction=null;
+function openScoreBurst(kind,rows,onConfirm=null){
+ clearTimeout(scoreBurstTimer);scoreBurstTimer=null;
+ const el=$('#scoreBurst');if(!el)return;
+ const main=el.querySelector('.score-main'),lines=el.querySelector('.score-lines');
+ main.textContent='';lines.innerHTML='';
+ rows.forEach(([label,value])=>{const row=document.createElement('div');row.className='score-line';const a=document.createElement('span');a.className='label';a.textContent=label;const b=document.createElement('span');b.className='value';b.textContent=value;row.append(a,b);lines.appendChild(row)});
+ el.className='score-burst '+kind+' show';scoreBurstConfirmAction=onConfirm;
+ const scoreEl=$('#score');scoreEl.classList.remove('score-pulse');void scoreEl.offsetWidth;scoreEl.classList.add('score-pulse');
+ requestAnimationFrame(()=>$('#scoreConfirm')?.focus());
+}
+function closeScoreBurst(){clearTimeout(scoreBurstTimer);scoreBurstTimer=null;const el=$('#scoreBurst');if(el)el.classList.remove('show');const fn=scoreBurstConfirmAction;scoreBurstConfirmAction=null;if(fn)fn()}
+$('#scoreConfirm').addEventListener('click',closeScoreBurst);
+function showScoreBurst(amount,label='',onConfirm=null){
+ const kind=amount>0?'positive':amount<0?'negative':'neutral';
+ const rows=amount>0?[['得分：',`+${amount}分`]]:amount<0?[['答錯：',`${amount}分`],['Combo：','中斷']]:[['得分：','0分']];
+ openScoreBurst(kind,rows,onConfirm);
+}
+function comboBonusFor(count){if(count>=5)return 50;if(count===4)return 30;if(count===3)return 20;if(count===2)return 10;return 0}
+function speedBonusFor(ms){if(ms<=5000)return 50;if(ms<=10000)return 10;return 0}
+function stopComboFade(){if(comboFadeRaf){cancelAnimationFrame(comboFadeRaf);comboFadeRaf=null}comboDeadline=null}
+function updateComboBadge(pulse=false){
+ const n=$('#comboNumber'),badge=$('#comboBadge');if(!n||!badge)return;n.textContent=comboCount;
+ badge.classList.toggle('combo-hidden',comboCount<=0);if(comboCount<=0)badge.style.opacity='0';else if(!comboDeadline)badge.style.opacity='1';
+ if(pulse&&comboCount>0){badge.classList.remove('combo-live');void badge.offsetWidth;badge.classList.add('combo-live')}
+}
+function startComboCountdown(){
+ stopComboFade();if(comboCount<=0){updateComboBadge();return}
+ const badge=$('#comboBadge');if(!badge)return;badge.classList.remove('combo-hidden');badge.style.opacity='1';comboDeadline=performance.now()+5000;
+ const tick=()=>{if(!comboDeadline||comboCount<=0)return;const left=comboDeadline-performance.now();if(left<=0){comboCount=0;stopComboFade();updateComboBadge();return}badge.style.opacity=String(Math.max(.12,left/5000));comboFadeRaf=requestAnimationFrame(tick)};comboFadeRaf=requestAnimationFrame(tick)
+}
+function breakCombo(){stopComboFade();comboCount=0;updateComboBadge()}
+function showAnswerBurst(speedBonus,comboBonus,onConfirm){
+ openScoreBurst('positive combo-burst',[
+   ['正確：','+100分'],
+   ['速度：',`+${speedBonus}分`],
+   ['Combo：',`+${comboBonus}分`]
+ ],onConfirm)
+}
+
+async function setMusic(on,source='manual'){
+ musicWanted=on;
+ if(!on){bgm.pause();musicPlaying=false;autoplayBlocked=false;updateMusicButton();return}
+ if(!musicReady){updateMusicButton();return}
+ try{await bgm.play();musicPlaying=true;autoplayBlocked=false}catch(e){musicPlaying=false;if(source==='auto')autoplayBlocked=true}
+ updateMusicButton();
+}
+bgm.addEventListener('play',()=>{musicPlaying=true;updateMusicButton()});
+bgm.addEventListener('pause',()=>{musicPlaying=false;updateMusicButton()});
+bgm.addEventListener('error',()=>{musicReady=false;musicPlaying=false;updateMusicButton()});
+function preloadImage(src,priority='auto'){
+ return new Promise(resolve=>{const img=new Image();if('fetchPriority' in img)img.fetchPriority=priority;img.decoding='async';img.onload=img.onerror=()=>resolve();img.src=src});
+}
+function preloadRemainingImages(){
+ if(remainingPreloadStarted)return;remainingPreloadStarted=true;
+ scenes.slice(CHAPTER_SIZE).forEach(s=>{const img=new Image();if('fetchPriority' in img)img.fetchPriority='low';img.decoding='async';img.src=s.src});
+}
+async function loadBackgroundMusicAfterChapterOne(){
+ if(bgmLoadStarted)return;bgmLoadStarted=true;updateMusicButton();
+ try{
+   // 第一章圖片完成後才開始抓 MP3；等音樂可播放後，再預載其餘圖片。
+   bgm.preload='auto';bgm.src=bgmUrl;bgm.load();
+   await new Promise((resolve,reject)=>{
+     const ok=()=>{cleanup();resolve()},bad=()=>{cleanup();reject(new Error('BGM load failed'))};
+     const cleanup=()=>{bgm.removeEventListener('canplay',ok);bgm.removeEventListener('loadeddata',ok);bgm.removeEventListener('error',bad)};
+     bgm.addEventListener('canplay',ok,{once:true});bgm.addEventListener('loadeddata',ok,{once:true});bgm.addEventListener('error',bad,{once:true});
+   });
+   musicReady=true;updateMusicButton();
+   if(musicWanted)await setMusic(true,'auto');
+ }catch(e){
+   musicReady=false;musicPlaying=false;$('#music').textContent='♫ 背景音樂載入失敗';
+ }finally{preloadRemainingImages()}
+}
+async function preloadInitialAssets(){
+ await Promise.all(scenes.slice(0,CHAPTER_SIZE).map(s=>preloadImage(s.src,'high')));
+ await loadBackgroundMusicAfterChapterOne();
+}
+function tryMusicAfterPictureTap(){if(musicWanted&&musicReady&&!musicPlaying)setMusic(true,'gesture')}
+function chooseFour(){
+  const correct=scenes[index].id;
+  const chapter=Math.floor(index/CHAPTER_SIZE);
+  const start=chapter*CHAPTER_SIZE+1, end=Math.min(start+CHAPTER_SIZE-1,scenes.length);
+  // 本章尚未答對的插畫優先；每題固定四選一。
+  const remaining=scenes.filter(s=>s.id>=start&&s.id<=end&&s.id>index+1).map(s=>s.id);
+  const chosen=[correct,...shuffle(remaining).slice(0,3)];
+  // 第一章保密：第一章候選圖優先使用本章圖片。
+  if(chapter===0 && chosen.length<4){
+    const earlier=scenes.filter(s=>s.id>=1&&s.id<=CHAPTER_SIZE&&!chosen.includes(s.id)).map(s=>s.id);
+    chosen.push(...shuffle(earlier).slice(0,4-chosen.length));
+  }
+  // 第二章起可從後續章節補足候選圖。
+  if(chosen.length<4 && chapter>0){
+    const next=scenes.filter(s=>s.id>end&&!chosen.includes(s.id)).map(s=>s.id);
+    chosen.push(...shuffle(next).slice(0,4-chosen.length));
+  }
+  // 若本章和後續章節不足四張，則從先前章節補足。
+  if(chosen.length<4){
+    const previous=scenes.filter(s=>s.id<start&&!chosen.includes(s.id)).map(s=>s.id);
+    chosen.push(...shuffle(previous).slice(0,4-chosen.length));
+  }
+  return shuffle(chosen);
+}
+function render(){
+  if(index>=scenes.length){finish();return}
+  const s=scenes[index];
+  order=chooseFour();
+  $('#progressLabel').textContent=`第 ${index+1} / ${scenes.length} 句`;
+  $('#score').textContent=`得分 ${score}`;updateComboBadge();
+  $('#progressFill').style.width=`${index/scenes.length*100}%`;
+  $('#sentence').textContent=s.text;
+  $('#translation').hidden=true;$('#translation').textContent=translations[index];$('#translateToggle').textContent='📖 查看白話翻譯';
+  $('#chapterLabel').textContent=(CHAPTER_NAMES[Math.floor(index/CHAPTER_SIZE)])+'・情節配對';
+  updateHintCount();
+  $('#target').innerHTML='<span class="plus">＋</span><span>選擇下方插畫填入</span>';
+  $('#target').className='target';
+  $('#remaining').textContent='4 個選項';
+  $('#choices').innerHTML='';
+  questionStartTime=null;const thisRender=++questionRenderToken;let loadedChoices=0;
+  const choiceReady=()=>{loadedChoices++;if(loadedChoices>=order.length&&thisRender===questionRenderToken&&index<scenes.length){questionStartTime=performance.now();startComboCountdown()}};
+  order.forEach(id=>{
+    const b=document.createElement('button');b.type='button';b.className='choice';
+    b.setAttribute('aria-label','放大查看候選圖片');
+    const im=document.createElement('img');im.alt='候選插畫';im.decoding='async';im.loading='eager';let counted=false;
+    const markChoiceReady=()=>{if(counted)return;counted=true;choiceReady()};im.addEventListener('load',markChoiceReady,{once:true});im.addEventListener('error',markChoiceReady,{once:true});im.src=scenes[id-1].src;
+    b.appendChild(im);b.addEventListener('click',()=>openPreview(id));$('#choices').appendChild(b);if(im.complete)queueMicrotask(markChoiceReady);
+  });
+}
+function openPreview(id){if(busy||$('#scoreBurst').classList.contains('show'))return;tryMusicAfterPictureTap();picked=id;$('#preview').src=scenes[id-1].src;$('#overlay').classList.add('show');$('#confirm').focus()}
+function closePreview(){$('#overlay').classList.remove('show');picked=null}
+function message(s,ok){$('#feedback').textContent=s;$('#feedback').className='feedback '+(ok?'good':'bad')}
+let academyRunWrong=false,academyRunSortPerfect=true,academyFinishShown=false;
+function answer(){
+ if(picked===null||busy)return;const id=picked;closePreview();
+ if(id!==scenes[index].id){
+   academyRunWrong=true;wrong();wrongCount++;breakCombo();const deduction=wrongCount<=2?50:0;baseScore-=deduction;score-=deduction;$('#score').textContent=`得分 ${score}`;
+   showScoreBurst(-deduction,deduction?`答錯了｜Combo中斷｜目前總分 ${score}`:`本句已扣滿 100 分｜Combo中斷｜總分 ${score}`);
+   message(deduction?`這張插畫與原文情節不符，本次扣 ${deduction} 分（本句已答錯 ${wrongCount} 次），Combo歸零。再觀察看看！`:`這張插畫與原文情節不符（本句已扣滿100分，不再扣分），Combo歸零。再試試！`,false);return
+ }
+ busy=true;play();
+ const elapsed=questionStartTime===null?Infinity:performance.now()-questionStartTime;
+ const speedBonus=speedBonusFor(elapsed);
+ const comboWasAlive=comboCount>0&&comboDeadline!==null&&performance.now()<comboDeadline;
+ stopComboFade();
+ if(wrongCount===0){comboCount=comboWasAlive?comboCount+1:1}else comboCount=0;updateComboBadge(true);
+ const comboBonus=comboBonusFor(comboCount);const earned=100+speedBonus+comboBonus;
+ baseScore+=100;speedBonusTotal+=speedBonus;comboBonusTotal+=comboBonus;score+=earned;
+ $('#target').innerHTML=`<img src="${scenes[index].src}" alt="配對成功的插畫">`;$('#target').className='target filled';
+ message('✓ 答對了！請確認本題得分。',true);
+ $('#score').textContent=`得分 ${score}`;$('#progressFill').style.width=`${(index+1)/scenes.length*100}%`;
+ showAnswerBurst(speedBonus,comboBonus,()=>{index++;wrongCount=0;questionStartTime=null;busy=false;message('',true);if(index%CHAPTER_SIZE===0){breakCombo();startSorting()}else{render()}window.scrollTo({top:0,behavior:'smooth'})});
+}
+let hintUsed=new Set(),sortSlots=[],sortLocked=[],sortScored=[],sortAttempts=0,sortChapter=0,sortHintCount=0,sortFinishing=false;
+function updateHintCount(){const count=[...hintUsed].filter(i=>Math.floor(i/CHAPTER_SIZE)===Math.floor(index/CHAPTER_SIZE)).length;$('#chapterLabel').textContent=CHAPTER_NAMES[Math.floor(index/CHAPTER_SIZE)]+'・情節配對｜翻譯提示 '+count+'/'+CHAPTER_SIZE}
+$('#translateToggle').addEventListener('click',()=>{const t=$('#translation');t.hidden=!t.hidden;$('#translateToggle').textContent=t.hidden?'📖 查看白話翻譯':'📖 收起白話翻譯';if(!t.hidden){hintUsed.add(index);updateHintCount()}});
+function startSorting(){
+ breakCombo();
+ sortChapter=Math.floor((index-1)/CHAPTER_SIZE);poolOrder=[];sortAttempts=0;sortHintCount=0;sortFinishing=false;sortSlots=Array(CHAPTER_SIZE).fill(null);sortLocked=Array(CHAPTER_SIZE).fill(false);sortScored=Array(CHAPTER_SIZE).fill(false);
+ $('#game').style.display='none';$('#review').classList.remove('show');$('#sorting').classList.add('show');
+ $('#sortTitle').textContent='第'+['一','二'][sortChapter]+'章・五句排序挑戰';
+ renderSorting();window.scrollTo({top:0,behavior:'smooth'});
+}
+function sortCard(id,clickable){const s=scenes[id-1],b=document.createElement('button');b.type='button';b.className='sort-card';
+ const im=document.createElement('img');im.src=s.src;im.alt='情節插畫';im.decoding='async';im.loading='lazy';const t=document.createElement('span');t.textContent=s.text;b.append(im,t);
+ if(clickable)b.addEventListener('click',clickable);else b.disabled=true;return b}
+let poolOrder=[];
+function renderSorting(){
+ const start=sortChapter*CHAPTER_SIZE+1,all=Array.from({length:CHAPTER_SIZE},(_,i)=>start+i);
+ if(!poolOrder.length||poolOrder.some(x=>!all.includes(x)))poolOrder=shuffle(all);
+ const slots=$('#sortSlots'),pool=$('#sortPool');slots.innerHTML='';pool.innerHTML='';
+ sortSlots.forEach((id,i)=>{const wrap=document.createElement('div');wrap.className='sort-slot'+(sortLocked[i]?' locked':'');
+ const label=document.createElement('div');label.className='sort-position';label.textContent='第 '+(i+1)+' 格'+(sortLocked[i]?' ✓ 正確':'');wrap.append(label);
+ if(id!==null)wrap.append(sortCard(id,sortLocked[i]?null:()=>{sortSlots[i]=null;renderSorting()}));else{const empty=document.createElement('div');empty.className='sort-empty';empty.textContent='點下方圖片填入';wrap.append(empty)}slots.append(wrap)});
+ poolOrder.filter(id=>!sortSlots.includes(id)).forEach(id=>{pool.append(sortCard(id,()=>{const at=sortSlots.findIndex(x=>x===null);if(at<0)return;sortSlots[at]=id;$('#sortFeedback').textContent='';renderSorting()}))});
+ const allLocked=sortLocked.every(Boolean);
+ $('#checkSort').disabled=sortFinishing||sortSlots.some(x=>x===null)||allLocked;
+ $('#sortHint').hidden=sortFinishing||allLocked||sortAttempts<2;
+ $('#sortRescue').hidden=sortFinishing||allLocked||sortAttempts<5;
+ $('#sortStats').textContent='已固定正確位置 '+sortLocked.filter(Boolean).length+'/'+CHAPTER_SIZE+'｜系統協助 '+sortHintCount+'/'+CHAPTER_SIZE+' 格｜已使用翻譯提示 '+[...hintUsed].filter(i=>Math.floor(i/CHAPTER_SIZE)===sortChapter).length+'/'+CHAPTER_SIZE+' 句｜檢查次數 '+sortAttempts;
+}
+function completeSorting(messageText){
+ if(sortFinishing)return;sortFinishing=true;renderSorting();$('#sortFeedback').textContent=messageText;
+ setTimeout(()=>{poolOrder=[];$('#sorting').classList.remove('show');sortFinishing=false;finish()},1200)
+}
+function checkSorting(){if(sortFinishing||sortSlots.some(x=>x===null)||$('#scoreBurst').classList.contains('show'))return;sortAttempts++;
+ let good=0,earned=0;for(let i=0;i<CHAPTER_SIZE;i++){
+   if(sortSlots[i]===sortChapter*CHAPTER_SIZE+i+1){sortLocked[i]=true;good++;if(!sortScored[i]){if(sortAttempts===1)earned+=50;else if(sortAttempts===2)earned+=25;else earned+=10;sortScored[i]=true}}
+   else if(!sortLocked[i])sortSlots[i]=null
+ }
+ if(sortAttempts!==1||good!==sortSlots.length)academyRunSortPerfect=false;
+ baseScore+=earned;score+=earned;$('#score').textContent=`得分 ${score}`;
+ const afterConfirm=()=>{
+   if(good===CHAPTER_SIZE){completeSorting(`🎉 五句排序全部正確！本次加 ${earned} 分，總分 ${score} 分。即將進入本章漫畫回顧。`);return}
+   renderSorting();
+   let help='';if(sortAttempts>=5)help=' 若還是卡住，可按「🆘 幫我完成剩下排序」。';else if(sortAttempts>=2)help=' 需要幫忙時，可按上方的「💡 幫我排一張」。';
+   $('#sortFeedback').textContent='✓ 已保留 '+good+' 張位置正確的圖片，本次加 '+earned+' 分（總分 '+score+' 分）。其餘已退回下方，請繼續排序。'+help;window.scrollTo({top:0,behavior:'smooth'})
+ };
+ if(earned>0){play();showScoreBurst(earned,'',afterConfirm)}else{wrong();showScoreBurst(0,'',afterConfirm)}
+}
+function useSortHint(){
+ if(sortFinishing||sortAttempts<2)return;const i=sortLocked.findIndex(v=>!v);if(i<0)return;
+ const correctId=sortChapter*CHAPTER_SIZE+i+1;for(let j=0;j<CHAPTER_SIZE;j++){if(j!==i&&!sortLocked[j]&&sortSlots[j]===correctId)sortSlots[j]=null}
+ sortSlots[i]=correctId;sortLocked[i]=true;sortScored[i]=true;sortHintCount++;renderSorting();
+ if(sortLocked.every(Boolean)){play();completeSorting(`🎉 已用提示補上最後一格，五句故事順序完成！總分 ${score} 分。即將進入本章漫畫回顧。`);return}
+ $('#sortFeedback').textContent=`💡 系統已幫你排好第 ${i+1} 格並鎖定（這一格不計分）。剩下的請繼續挑戰！`;window.scrollTo({top:0,behavior:'smooth'})
+}
+function finishSortByHelp(){
+ if(sortFinishing||sortAttempts<5)return;let helped=0;
+ for(let i=0;i<CHAPTER_SIZE;i++){if(!sortLocked[i]){sortSlots[i]=sortChapter*CHAPTER_SIZE+i+1;sortLocked[i]=true;sortScored[i]=true;helped++}}
+ sortHintCount+=helped;renderSorting();play();completeSorting(`🆘 系統已幫你完成剩下 ${helped} 格。本章排序完成，總分 ${score} 分。一起進入漫畫回顧吧！`)
+}
+$('#checkSort').addEventListener('click',checkSorting);
+$('#sortHint').addEventListener('click',useSortHint);
+$('#sortRescue').addEventListener('click',finishSortByHelp);
+// ===== v3.0 雲端排行榜（Supabase） =====
+// 建立 Supabase 專案後，只要把下面兩個值換掉即可啟用跨裝置排行榜。
+// 只能使用 Publishable key（sb_publishable_...）；絕對不要把 Secret key 放在網頁裡。
+const SUPABASE_URL='https://qxgysajhvqjpogrsutyf.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_TvmZX_hhWXlQlxEQ4ejz5Q_UOnwedVP';
+const CLOUD_LEADERBOARD_READY=true; // 部署前請先執行唯一活動版 SQL
+let cloudSavePending=false,cloudScoreSaved=false,cloudLastError='';
+const LEADERBOARD_KEY='rf_sw_leaderboard_local_v1';
+function loadLeaderboard(){
+ try{const data=JSON.parse(localStorage.getItem(LEADERBOARD_KEY)||'[]');return Array.isArray(data)?data:[]}catch(e){return []}
+}
+function saveLocalLeaderboardScore(){
+ if(!playerName||scoreSaved)return;scoreSaved=true;
+ try{
+   const rows=loadLeaderboard();const now=Date.now();const found=rows.find(r=>r.name.toLocaleLowerCase()===playerName.toLocaleLowerCase());
+   if(!found)rows.push({name:playerName,game:'room',score,time:now,baseScore,speedBonus:speedBonusTotal,comboBonus:comboBonusTotal});
+   else if(score>Number(found.score||0)){found.score=score;found.game='room';found.time=now;found.baseScore=baseScore;found.speedBonus=speedBonusTotal;found.comboBonus=comboBonusTotal}
+   rows.sort((a,b)=>Number(b.score)-Number(a.score)||Number(a.time)-Number(b.time));
+   localStorage.setItem(LEADERBOARD_KEY,JSON.stringify(rows.slice(0,100)));
+ }catch(e){}
+}
+async function saveCloudLeaderboardScore(){
+ if(!CLOUD_LEADERBOARD_READY||!playerName||cloudScoreSaved||cloudSavePending)return;
+ cloudSavePending=true;cloudLastError='';
+ try{
+   const res=await fetch(SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/rpc/rf_sw_submit_score',{
+     method:'POST',headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json','Accept':'application/json'},
+     body:JSON.stringify({p_player_name:playerName,p_game_id:'room',p_total_score:score})
+   });
+   if(!res.ok){let detail='';try{detail=await res.text()}catch(e){}throw new Error('HTTP '+res.status+(detail?' '+detail:''))}
+   cloudScoreSaved=true;
+ }catch(e){cloudLastError=e?.message||String(e);console.warn('雲端排行榜上傳失敗',e)}
+ finally{cloudSavePending=false}
+}
+function saveLeaderboardScore(){
+ saveLocalLeaderboardScore();
+ void saveCloudLeaderboardScore();
+}
+function normalizeLeaderboardRow(r){
+ return {name:String(r.player_name??r.name??''),score:Number(r.total_score??r.score??0),game:String(r.game_id??r.game??''),time:r.achieved_at??r.time??''}
+}
+function samePlayerName(a,b){return String(a||'').trim().toLocaleLowerCase()===String(b||'').trim().toLocaleLowerCase()}
+function renderMyRank(rows){
+ const card=$('#myRankCard');if(!card)return;card.className='lb-me-card';card.innerHTML='';
+ const all=rows.map(normalizeLeaderboardRow);
+ const activeName=(playerName||$('#playerNameInput')?.value.trim()||'').trim();
+ if(!activeName){
+   const title=document.createElement('div');title.className='lb-me-title';title.textContent='我的排名';
+   const empty=document.createElement('div');empty.className='lb-me-empty';empty.textContent='輸入姓名並開始挑戰後，這裡會顯示你的最高紀錄與目前名次。';
+   card.append(title,empty);card.classList.add('show');return;
+ }
+ const idx=all.findIndex(r=>samePlayerName(r.name,activeName));
+ const title=document.createElement('div');title.className='lb-me-title';title.textContent='我的排名';
+ const who=document.createElement('div');who.className='lb-current-player';who.textContent=`目前玩家：${activeName}`;
+ card.append(title,who);
+ if(idx<0){
+   const empty=document.createElement('div');empty.className='lb-me-empty';empty.textContent='尚未有完整成績。完成一局後，就會在這裡顯示你的名次與最高紀錄。';
+   card.append(empty);card.classList.add('show');return;
+ }
+ const me=all[idx],rank=idx+1;
+ const big=document.createElement('div');big.className='lb-me-rank';big.textContent=rank<=3?`🏆 目前第 ${rank} 名`:`目前第 ${rank} 名`;
+ const sc=document.createElement('div');sc.className='lb-me-score';sc.textContent=`最高紀錄 ${me.score} 分`;
+ const goal=document.createElement('div');goal.className='lb-me-goal';
+ const parts=[];
+ if(rank===1)parts.push('👑 目前是排行榜第一名！');
+ else{const prev=all[idx-1];const need=Math.max(1,prev.score-me.score+1);parts.push(`再多 ${need} 分，可超越第 ${rank-1} 名`)}
+ if(rank>10&&all.length>=10){const tenth=all[9];const need10=Math.max(1,tenth.score-me.score+1);parts.push(`🎯 再多 ${need10} 分，就能進前 10 名`)}
+ else if(rank<=10&&rank>3)parts.push('🎯 已進入前 10 名！');
+ goal.textContent=parts.join(' ｜ ');card.append(big,sc,goal);card.classList.add('show');
+}
+function renderPodium(rows){
+ const wrap=$('#leaderboardPodium');if(!wrap)return;wrap.innerHTML='';
+ const classes=['first','second','third'],medals=['🥇','🥈','🥉'],titles=['陋室達人','銀榜高手','銅榜高手'];
+ rows.slice(0,3).map(normalizeLeaderboardRow).forEach((r,i)=>{
+   const card=document.createElement('div');card.className=`podium-card ${classes[i]}`+(samePlayerName(r.name,playerName)?' me':'');
+   if(i===0){const crown=document.createElement('div');crown.className='podium-crown';crown.textContent='👑';card.append(crown)}
+   const medal=document.createElement('div');medal.className='podium-medal';medal.textContent=medals[i];
+   const title=document.createElement('div');title.className='podium-title';title.textContent=titles[i];
+   const name=document.createElement('div');name.className='podium-name';name.textContent=r.name+(r.game==='room'?'｜陋室銘':r.game==='child'?'｜兒時記趣':'');
+   const scoreEl=document.createElement('div');scoreEl.className='podium-score';scoreEl.textContent=r.score+' 分';
+   card.append(medal,title,name,scoreEl);wrap.append(card)
+ });
+}
+function renderLeaderboardRows(rows,source='cloud'){
+ const list=$('#leaderboardList'),title=$('#leaderboardListTitle');if(!list)return;list.innerHTML='';
+ const all=rows.map(normalizeLeaderboardRow);
+ renderMyRank(all);renderPodium(all);
+ const rest=all.slice(3,20);
+ if(title)title.style.display=rest.length?'block':'none';
+ if(!all.length){const empty=document.createElement('div');empty.className='lb-empty';empty.textContent='目前還沒有成績，完成第一場挑戰就會出現在這裡！';list.append(empty);return}
+ rest.forEach((r,j)=>{
+   const i=j+3;const row=document.createElement('div');row.className='lb-row toplist'+(samePlayerName(r.name,playerName)?' me':'');
+   const rank=document.createElement('div');rank.className='lb-rank';rank.textContent='#'+(i+1);
+   const name=document.createElement('div');name.className='lb-name';name.textContent=r.name+(r.game==='room'?'｜陋室銘':r.game==='child'?'｜兒時記趣':'');
+   const sc=document.createElement('div');sc.className='lb-score';sc.textContent=r.score+' 分';
+   row.append(rank,name,sc);list.append(row)
+ });
+}
+async function renderLeaderboard(){
+ const list=$('#leaderboardList'),note=$('#leaderboardNote');if(!list)return;
+ list.innerHTML='<div class="lb-empty">排行榜載入中…</div>';
+ if(CLOUD_LEADERBOARD_READY){
+   if(!cloudScoreSaved&&!cloudSavePending&&playerName&&index>=scenes.length)await saveCloudLeaderboardScore();
+   try{
+     const url=SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/rf_sw_leaderboard?select=player_name,game_id,total_score,achieved_at&order=total_score.desc,achieved_at.asc&limit=1000';
+     const res=await fetch(url,{headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Accept':'application/json'}});
+     if(!res.ok)throw new Error('HTTP '+res.status);
+     const rows=await res.json();
+     if(note)note.textContent='☁️ 閱讀節共用排行榜｜兩篇共用排行，同一姓名只保留最高分；同分時較早達成者在前。';
+     renderLeaderboardRows(Array.isArray(rows)?rows:[],'cloud');return;
+   }catch(e){cloudLastError=e?.message||String(e);console.warn('雲端排行榜讀取失敗',e)}
+ }
+ const rows=loadLeaderboard().sort((a,b)=>Number(b.score)-Number(a.score)||Number(a.time)-Number(b.time));
+ if(note)note.textContent=CLOUD_LEADERBOARD_READY?'⚠️ 目前連不上雲端，暫時顯示這台裝置的本機排行榜。':'⚙️ 雲端排行榜尚未連線，暫時顯示這台裝置的本機紀錄（非雲端正式排名）。';
+ renderLeaderboardRows(rows,'local');
+}
+function openLeaderboard(){
+ $('#leaderboardOverlay').classList.add('show');
+ void renderLeaderboard();
+}
+function closeLeaderboard(){$('#leaderboardOverlay').classList.remove('show')}
+function beginForPlayer(){
+ const name=$('#playerNameInput').value.trim();if(!name){$('#startError').textContent='請先輸入姓名再開始挑戰。';$('#playerNameInput').focus();return}
+ playerName=name;try{sessionStorage.setItem('rf_sw_player_name_v1',name)}catch(e){}scoreSaved=false;cloudScoreSaved=false;cloudSavePending=false;cloudLastError='';$('#startError').textContent='';$('#playerStart').style.display='none';
+ if(musicReady&&musicWanted&&!musicPlaying)setMusic(true,'gesture');
+ reset(false);
+}
+function finish(){
+ reviewChapter=Math.ceil(index/CHAPTER_SIZE);
+ const from=(reviewChapter-1)*CHAPTER_SIZE;
+ const batch=scenes.slice(from,from+CHAPTER_SIZE);
+ $('#game').style.display='none';
+ $('#review').classList.add('show');
+ $('#review h2').textContent='🎉 '+['第一','第二'][reviewChapter-1]+'章完成！五句漫畫回顧';
+ $('#review .sub').textContent='依照故事順序回顧本章五幅插畫與古文。';
+ $('#reviewGrid').innerHTML='';
+ $('#review .sub').textContent='目前累計 '+score+' 分。本章使用白話翻譯提示 '+[...hintUsed].filter(i=>Math.floor(i/CHAPTER_SIZE)===reviewChapter-1).length+'/'+CHAPTER_SIZE+' 句。依故事順序回顧插畫、原文與白話翻譯。';
+ batch.forEach(s=>{
+   const article=document.createElement('article');article.className='review-item';
+   const img=document.createElement('img');img.src=s.src;img.alt='第'+s.id+'句插畫';img.loading='lazy';img.decoding='async';img.decoding='async';
+   const small=document.createElement('small');small.textContent='第 '+s.id+' 句';
+   const p=document.createElement('p');p.textContent=s.text;
+   const translation=document.createElement('p');translation.className='review-translation';translation.textContent=translations[s.id-1];article.append(img,small,p,translation);$('#reviewGrid').appendChild(article);
+ });
+ $('#again').textContent=reviewChapter<CHAPTER_NAMES.length?'進入第'+['','二'][reviewChapter]+'章（第'+(index+1)+'～'+(index+CHAPTER_SIZE)+'句）':'觀看10句完整連環漫畫';
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function reset(markNewRun=true){index=0;score=0;baseScore=0;speedBonusTotal=0;comboBonusTotal=0;comboCount=0;stopComboFade();questionStartTime=null;questionRenderToken++;wrongCount=0;academyRunWrong=false;academyRunSortPerfect=true;academyFinishShown=false;picked=null;busy=false;order=[];reviewChapter=0;hintUsed=new Set();poolOrder=[];if(markNewRun){scoreSaved=false;cloudScoreSaved=false;cloudSavePending=false;cloudLastError=''}updateComboBadge();clearTimeout(scoreBurstTimer);scoreBurstConfirmAction=null;if($('#scoreBurst'))$('#scoreBurst').classList.remove('show');$('#sorting').classList.remove('show');$('#game').style.display='block';$('#review').classList.remove('show');$('#complete').classList.remove('show');closePreview();message('',true);render();window.scrollTo({top:0,behavior:'smooth'})}
+
+
+function showFestivalCloudStatus(){
+ let box=document.getElementById('rfCloudStatus');
+ if(!box){box=document.createElement('div');box.id='rfCloudStatus';box.setAttribute('role','status');box.style.cssText='padding:12px;border:1px solid #cfb98f;background:#fff9ed;border-radius:12px;margin:10px 0;line-height:1.7;font-weight:700';document.querySelector('#complete .complete-actions').before(box)}
+ box.replaceChildren();
+ const msg=document.createElement('span');msg.textContent='☁️ 正在上傳閱讀節成績……';box.append(msg);
+ const btn=document.createElement('button');btn.textContent='🔄 重試上傳';btn.type='button';btn.style.cssText='margin-left:10px;padding:7px 12px;border:0;border-radius:9px;background:#6b7452;color:white;font:inherit;cursor:pointer';
+ btn.addEventListener('click',async()=>{await saveCloudLeaderboardScore();showFestivalCloudStatus()});
+ if(cloudScoreSaved){msg.textContent='✅ 已上傳閱讀節共用排行榜。';return}
+ if(cloudSavePending){setTimeout(showFestivalCloudStatus,500);return}
+ msg.textContent='⚠️ 雲端尚未儲存成功，請確認已執行活動版 SQL 與網路連線。'+(cloudLastError?'（'+cloudLastError.slice(0,130)+'）':'');box.append(btn);
+}
+
+function showComplete(){
+ $('#review').classList.remove('show');$('#game').style.display='none';$('#complete').classList.add('show');try{const key='rf_sw_progress_local_v1';const progress=JSON.parse(localStorage.getItem(key)||'{}');if(!progress.completed||typeof progress.completed!=='object')progress.completed={};progress.completed.room={at:Date.now()};localStorage.setItem(key,JSON.stringify(progress));}catch(e){console.warn('書院通關紀錄未能保存',e)}academyFinishShown=true;saveLeaderboardScore();showFestivalCloudStatus();$('#finalBase').textContent=baseScore;$('#finalSpeed').textContent='+'+speedBonusTotal;$('#finalCombo').textContent='+'+comboBonusTotal;$('#finalTotal').textContent=score;$('#complete .sub').textContent=playerName+'，恭喜完成挑戰！兩章故事依序呈現，以下可回顧全部10幅畫與原文。';
+ const grid=$('#completeGrid');grid.innerHTML='';
+ scenes.forEach(scene=>{const card=document.createElement('article');card.className='review-item';
+ const img=document.createElement('img');img.src=scene.src;img.alt='第'+scene.id+'句插畫';img.loading='lazy';img.decoding='async';
+ const small=document.createElement('small');small.textContent='第'+scene.id+'句｜'+['第一','第二'][Math.floor((scene.id-1)/CHAPTER_SIZE)]+'章';
+ const para=document.createElement('p');para.textContent=scene.text;const translation=document.createElement('p');translation.className='review-translation';translation.textContent=translations[scene.id-1];card.append(img,small,para,translation);grid.append(card)});
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextChapter(){if(reviewChapter<CHAPTER_NAMES.length){$('#game').style.display='block';$('#review').classList.remove('show');render();window.scrollTo({top:0,behavior:'smooth'})}else{showComplete()}}
+$('#confirm').addEventListener('click',answer);$('#cancel').addEventListener('click',closePreview);$('#close').addEventListener('click',closePreview);$('#overlay').addEventListener('click',e=>{if(e.target===$('#overlay'))closePreview()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePreview();closeLeaderboard()}});$('#reset').addEventListener('click',()=>reset(true));$('#restartAll').addEventListener('click',()=>reset(true));$('#showLeaderboard').addEventListener('click',openLeaderboard);$('#startLeaderboard').addEventListener('click',openLeaderboard);$('#sortLeaderboard').addEventListener('click',openLeaderboard);$('#closeLeaderboard').addEventListener('click',closeLeaderboard);$('#leaderboardOverlay').addEventListener('click',e=>{if(e.target===$('#leaderboardOverlay'))closeLeaderboard()});$('#startGameBtn').addEventListener('click',beginForPlayer);$('#playerNameInput').addEventListener('keydown',e=>{if(e.key==='Enter')beginForPlayer()});$('#music').addEventListener('click',()=>{if(musicPlaying){setMusic(false,'gesture')}else{setMusic(true,'gesture')}});$('#again').addEventListener('click',nextChapter);$('#sound').addEventListener('click',()=>{soundOn=!soundOn;$('#sound').textContent='音效：'+(soundOn?'開':'關')});reset(false);updateMusicButton();preloadInitialAssets();try{const savedName=sessionStorage.getItem('rf_sw_player_name_v1')||'';if(savedName){$('#playerNameInput').value=savedName;beginForPlayer();}else{$('#playerNameInput').focus();}}catch(e){$('#playerNameInput').focus();}
+
+/* 活動副本固定返回活動入口，禁止正式版雲端學籍同步。 */
+</script></body></html>
